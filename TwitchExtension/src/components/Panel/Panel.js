@@ -113,11 +113,12 @@ export default class PanelComponent extends React.Component {
 
 		return (
 			<div className='container'>		
-				<img id='title_img'src={require("../../assets/title.png")}/>	
+				<img id='title_img'src={require("../../assets/title.png")}/>
+				<div id='info_container'>Click to donate bits and make it interesting for your favorite streamer</div>	
 				<div
 					className={"action_button " + (isLoading ? "loading" : "")}
 					onClick={() => this.payForAction("raveParty")}>
-					<span className="button_title">Rave Party</span>
+					<span className="button_title">The Worst Rave</span>
 					<span className="bit_cost">200 bits</span>
 				</div>
 				<div
@@ -130,7 +131,7 @@ export default class PanelComponent extends React.Component {
 					<label className="field a-field a-field_a1">
 					    <input value={text} onFocus={this.handleFocus} onBlur={this.handleBlur} onChange={this.handleTextChange} onKeyPress={this.handleKeyPress} className="field__input a-field__input" placeholder="e.g. PogChamp" required></input>
 					    <span className="a-field__label-wrap">
-					      <span class="a-field__label">Post a Message</span>
+					      <span class="a-field__label">Send a Message, Make it Rain</span>
 					    </span>
 				  	</label>
 				  	<div>

@@ -65,6 +65,12 @@
 	max-width: 100%;
 }
 
+#info_container {
+	font-size: 12px;
+	padding: 8px;
+	text-align: center;
+}
+
 /*
 =====
 LEVEL 1. RESET STYLES
