@@ -14,13 +14,19 @@
         type: String,
         default: 'Kappa',
       },
+	    intensity: {
+		    default: 10,
+	    },
+	    greyscale: {
+		    default: false,
+	    },
     },
     mounted() {
       this.svg = d3.select(document.getElementById('svg'));
 
       this.loopID = setInterval(() => {
         this.make_it_rain(1);
-      }, 250);
+      }, Math.round(1000 / (this.intensity / 10)));
     },
     methods: {
       make_it_rain(numDrops) {

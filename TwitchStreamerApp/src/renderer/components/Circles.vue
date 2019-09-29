@@ -7,6 +7,14 @@
 
   export default {
     name: 'Circles',
+    props: {
+    	intensity: {
+    		default: 10,
+      },
+	    greyscale: {
+        default: false,
+	    },
+    },
     created() {
     },
     mounted() {
@@ -14,7 +22,7 @@
 
       this.loopID = setInterval(() => {
         this.make_it_rain(2);
-      }, 250);
+      }, Math.round(1000 / (this.intensity / 10)));
     },
     methods: {
       make_it_rain(numDrops) {

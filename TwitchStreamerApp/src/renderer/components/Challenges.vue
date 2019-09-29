@@ -15,16 +15,18 @@
       </h1>
     </div>
     <circles
+        :greyscale="greyscale"
+        :intensity="intensity"
         v-if="loaded && showCircles"/>
     <image-rain
+        :greyscale="greyscale"
+        :intensity="intensity"
         v-if="loaded && showRain"
         :text="rainText"/>
   </div>
 </template>
 
 <script>
-  /* eslint-disable no-console */
-
   import io from 'socket.io-client';
   import * as d3 from 'd3';
 
@@ -34,6 +36,17 @@
   export default {
     name: 'Challenges',
     components: { ImageRain, Circles },
+    props: {
+      intensity: {
+        default: 10,
+      },
+      greyscale: {
+        default: false,
+      },
+      username: {
+        default: 123,
+      },
+    },
     data() {
       return {
         loaded: false,
@@ -86,7 +99,7 @@
       showColorShift() {
         if (this.showColorShift) {
           this.colorShift();
-          this.colorShiftLoopID = setInterval(this.colorShift, 2000);
+          this.colorShiftLoopID = setInterval(this.colorShift, Math.round(1000 / (this.intensity / 20)));
         } else {
           clearInterval(this.colorShiftLoopID);
           this.$emit('bg', 'rgba(0, 0, 0, 0)');
@@ -97,14 +110,11 @@
       initSocket() {
         this.socket = io.connect('http://7c03d8c0.ngrok.io/');
 
-        this.socket.on('connected', (message) => {
-          console.log(message);
-          this.socket.emit('register_room', { id: 123 });
+        this.socket.on('connected', () => {
+          this.socket.emit('register_room', { id: this.username });
         });
 
-        console.log('a');
         this.socket.on('event', (data) => {
-          console.log(data);
           switch (data.id) {
             case 'rainingText':
               this.addChallenge('rainingText', 'showRain', 'Text Rain', 180);
@@ -116,15 +126,12 @@
             case 'colorShift':
               this.addChallenge('colorShift', 'showColorShift', 'Color Shift', 180);
               break;
-            case 4:
-              break;
             default:
               break;
           }
         });
 
         this.socket.on('disconnect', () => {
-          console.log('disconnected');
         });
       },
 
@@ -144,6 +151,7 @@
         const g = Math.round(Math.random() * 256);
         const b = Math.round(Math.random() * 256);
         const a = (Math.random() / 3) + 0.2;
+        if (this.greyscale) this.$emit('bg', `rgba(${g}, ${g}, ${g}, ${a})`);
         this.$emit('bg', `rgba(${r}, ${g}, ${b}, ${a})`);
       },
 
