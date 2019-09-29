@@ -4,6 +4,9 @@
       :style="bgStyle">
     <challenges
         v-if="landed"
+        :greyscale="greyChallenges"
+        :intensity="challengeRatePerTen"
+        :username="username"
         @bg="updateBg"/>
     <landing-page
         v-else
@@ -12,8 +15,6 @@
 </template>
 
 <script>
-  /* eslint-disable no-console */
-
   import { remote } from 'electron';
   import LandingPage from './LandingPage';
   import Challenges from './Challenges';
@@ -27,26 +28,29 @@
 
         greyChallenges: false,
         challengeRatePerTen: 1,
+        username: '',
         bgStyle: {
           'background-color': 'rgba(0, 0, 0, 0) !important',
         },
       };
     },
     created() {
-      if (this.landed) this.transitionToWindowless();
+      if (this.landed) this.transitionToWindowless({});
     },
     methods: {
-      transitionToWindowless() {
+      transitionToWindowless({ greyscale, intensity, username }) {
+      	this.greyChallenges = greyscale;
+      	this.challengeRatePerTen = intensity;
+      	this.username = username;
         const mainWindow = remote.getCurrentWindow();
         mainWindow.setVisibleOnAllWorkspaces(true);
         mainWindow.setAlwaysOnTop(true, 'floating', 1);
         mainWindow.setFullScreenable(false);
-        // mainWindow.setIgnoreMouseEvents(true, { forward: true });
+        mainWindow.setIgnoreMouseEvents(true, { forward: true });
         this.$set(this, 'landed', true);
       },
 
       updateBg(newColor) {
-        console.log(this.bgStyle['background-color']);
         this.$set(this.bgStyle, 'background-color', `${newColor} !important`);
       },
     },
@@ -84,7 +88,7 @@
     width: 100vw;
   }
 
-  m-auto {
+  .m-auto {
     margin: auto;
   }
 </style>

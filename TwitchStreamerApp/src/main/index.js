@@ -48,8 +48,7 @@ function createWindow() {
   // });
 }
 
-app.disableHardwareAcceleration();
-app.on('ready', () => setTimeout(createWindow, 300));
+app.on('ready', createWindow);
 
 
 app.on('window-all-closed', () => {
