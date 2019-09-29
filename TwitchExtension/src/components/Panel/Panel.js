@@ -35,22 +35,42 @@ export default class PanelComponent extends React.Component {
 		}
 	}
 
+	componentDidMount() {
+		if (this.twitch) {
+			this.twitch.onAuthorized(auth => {
+				this.Authentication.setToken(auth.token, auth.userId);
+				this.setState({
+					isLoading: false,
+					broadcaster_id: auth.channelId
+				});
+			})
+			this.twitch.onContext((context,delta)=>{
+                this.contextUpdate(context,delta)
+            })
+		}
+	}
+
 	componentWillUnmount(){
 
 	}
 
+	contextUpdate(context, delta) {
+		if(delta.includes('theme')){
+            this.setState(()=>{
+                return {theme:context.theme}
+            })
+        }
+	}
+
 	payForAction(hindrance_id) {
-		// this.twitch.rig.log(bitsValue)
+		this.twitch.rig.log(hindrance_id, "requested")
 		this.setState({isLoading: true})
-		setTimeout(() => {
-		  console.log('Hello, World!')
-			this.setState({isLoading: false})
-		}, 3000);
-		// requestHindrance(hindrance_id)
-		// .then(() => {
-		// 	this.setState({isLoading: false})
-		// 	this.twitch.rig.log('success')
-		// })
+		requestHindrance(this.state.broadcaster_id, hindrance_id)
+		.then(data => {
+			this.twitch.rig.log(data.message)
+		})
+		.catch(error => this.twitch.rig.log(error))
+		.finally(() => this.setState({isLoading: false}))
 	}
 
 	render() {
