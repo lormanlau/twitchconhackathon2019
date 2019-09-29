@@ -18,17 +18,34 @@ app.get('/ping', (req, res) => {
 	res.send({message: 'pong'})
 })
 
+// tell the user if they can use it or not
 app.get('/hindrance/:broadcaster_id/:hindrance_id', (req, res) => {
 	let {hindrance_id, broadcaster_id} = req.params
-	io.to(broadcaster_id).emit('event', {id: hindrance_id})
-	res.send({message: `successfully queue ${hindrance_id} for ${broadcaster_id}`})
+	
+
+	rawData = fs.readFileSync("broadcasters.json");
+	data = JSON.parse(rawData); 
+
+	if(!data.hasOwnProperty(broadcaster_id) || data[broadcaster_id] == false) {
+		return res.send(message: "extension is currently not active on server")
+	} else {
+		io.to(broadcaster_id).emit('event', {id: hindrance_id})
+		return res.send({message: `successfully queue ${hindrance_id} for ${broadcaster_id}`})
+	}
 })
 
 app.post('/hindrance/:broadcaster_id/:hindrance_id', (req, res) => {
 	let {hindrance_id, broadcaster_id} = req.params
-	console.log(req.body)
-	io.to(broadcaster_id).emit('event', {id: hindrance_id, text:req.body.text})
-	res.send({message: `successfully queue ${hindrance_id} for ${broadcaster_id} with text ${req.body.text}`})
+
+	rawData = fs.readFileSync("broadcasters.json");
+	data = JSON.parse(rawData); 
+
+	if(!data.hasOwnProperty(broadcaster_id) || data[broadcaster_id] == false) {
+		return res.send(message: "extension is currently not active on server")
+	} else {
+		io.to(broadcaster_id).emit('event', {id: hindrance_id, text:req.body.text})
+		return res.send({message: `successfully queue ${hindrance_id} for ${broadcaster_id} with text ${req.body.text}`})
+	}
 })
 
 io.on('connection', socket => {
@@ -54,7 +71,6 @@ io.on('connection', socket => {
 
 	// deactivate them so buttons wont render
 	socket.on('disconnected', msg => {
-		socket.join(msg.id)
 
 		// time to read in from a json file in the local directory
 		rawData = fs.readFileSync( "broadcasters.json" );
