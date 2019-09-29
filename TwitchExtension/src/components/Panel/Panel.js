@@ -9,6 +9,9 @@ export default class PanelComponent extends React.Component {
 		super(props)
 		this.twitch = window.Twitch ? window.Twitch.ext : null
 		this.Authentication = new Authentication()
+		this.state = {
+			isLoading: false,
+		}
 	}
 
 	componentWillMount() {
