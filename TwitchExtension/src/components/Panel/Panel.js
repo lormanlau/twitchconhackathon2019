@@ -1,6 +1,7 @@
 import React from 'react'
 import Authentication from '../../util/Authentication/Authentication'
 import { requestHindrance } from '../../util/requests'
+import { postHindranceMessage } from '../../util/requests'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 
@@ -13,7 +14,7 @@ export default class PanelComponent extends React.Component {
 		this.twitch = window.Twitch ? window.Twitch.ext : null
 		this.Authentication = new Authentication()
 		this.state = {
-			isLoading: false,
+			isLoading: true,
 			theme: 'light',
 		}
 	}
@@ -39,9 +40,10 @@ export default class PanelComponent extends React.Component {
 					broadcaster_id: auth.channelId
 				});
 			})
+
 			this.twitch.onContext((context,delta)=>{
-                this.contextUpdate(context,delta)
-            })
+        this.contextUpdate(context,delta)
+      })
 		}
 	}
 
@@ -52,7 +54,26 @@ export default class PanelComponent extends React.Component {
 	payForAction(hindrance_id) {
 		this.twitch.rig.log(hindrance_id, "requested")
 		this.setState({isLoading: true})
+		// setTimeout(() => {
+		// 	console.log('Hello, World!')
+		// 	this.setState({isLoading: false})
+		// }, 3000);
 		requestHindrance(this.state.broadcaster_id, hindrance_id)
+		.then(data => {
+			this.twitch.rig.log(data.message)
+		})
+		.catch(error => this.twitch.rig.log(error))
+		.finally(() => this.setState({isLoading: false}))
+	}
+
+	payForActionWithMessage(hindrance_id, message) {
+		this.twitch.rig.log(hindrance_id, "requested: " + message)
+		this.setState({isLoading: true})
+		// setTimeout(() => {
+		// 	console.log('Hello, World!')
+		// 	this.setState({isLoading: false})
+		// }, 3000);
+		postHindranceMessage(this.state.broadcaster_id, hindrance_id, message)
 		.then(data => {
 			this.twitch.rig.log(data.message)
 		})
@@ -68,14 +89,19 @@ export default class PanelComponent extends React.Component {
 			if (theme == "light") {
 				return (
 					<div className='container'>
-						<div className="action_button_loading_light" onClick={() => this.payForAction(100)}>
+						<div className="action_button_loading_light" onClick={() => this.payForAction("raveParty")}>
 							<h3>Flip Screen Orientation</h3>
 						</div>
-						<div className="action_button_loading_light" onClick={() => this.payForAction(200)}>
+						<div className="action_button_loading_light" onClick={() => this.payForAction("invertColors")}>
 							<h3>Invert Colors</h3>
 						</div>
-						<div className="action_button_loading_light" onClick={() => this.payForAction(300)}>
-							<h3>Shuffle Keyboard</h3>
+						<div class="page">
+							<label class="field a-field a-field_a1">
+						    <input class="field__input a-field__input" placeholder="e.g. PogChamp" required></input>
+						    <span class="a-field__label-wrap">
+						      <span class="a-field__label">Post a Message</span>
+						    </span>
+						  </label>
 						</div>
 						<div className = "loading-icon">
 							<FontAwesomeIcon className="loading-flip" icon={faSpinner} size="2x" color="black" spin />
@@ -85,14 +111,19 @@ export default class PanelComponent extends React.Component {
 			} else {
 				return (
 					<div className='container'>
-						<div className="action_button_loading_dark" onClick={() => this.payForAction(100)}>
+						<div className="action_button_loading_dark" onClick={() => this.payForAction("raveParty")}>
 							<h3>Flip Screen Orientation</h3>
 						</div>
-						<div className="action_button_loading_dark" onClick={() => this.payForAction(200)}>
+						<div className="action_button_loading_dark" onClick={() => this.payForAction("invertColors")}>
 							<h3>Invert Colors</h3>
 						</div>
-						<div className="action_button_loading_dark" onClick={() => this.payForAction(300)}>
-							<h3>Shuffle Keyboard</h3>
+						<div class="page">
+							<label class="field a-field a-field_a1">
+						    <input class="field__input a-field__input" placeholder="e.g. PogChamp" required></input>
+						    <span class="a-field__label-wrap">
+						      <span class="a-field__label">Post a Message</span>
+						    </span>
+						  </label>
 						</div>
 						<div className = "loading-icon">
 							<FontAwesomeIcon className="loading-flip" icon={faSpinner} size="2x" color="white" spin />
@@ -104,28 +135,38 @@ export default class PanelComponent extends React.Component {
 			if (theme == "light") {
 				return (
 					<div className='container'>
-						<div className="action_button_light" onClick={() => this.payForAction(100)}>
+						<div className="action_button_light" onClick={() => this.payForAction("raveParty")}>
 							<h3>Flip Screen Orientation</h3>
 						</div>
-						<div className="action_button_light" onClick={() => this.payForAction(200)}>
+						<div className="action_button_light" onClick={() => this.payForAction("invertColors")}>
 							<h3>Invert Colors</h3>
 						</div>
-						<div className="action_button_light" onClick={() => this.payForAction(300)}>
-							<h3>Shuffle Keyboard</h3>
+						<div class="page">
+							<label class="field a-field a-field_a1">
+								<input class="field__input a-field__input" placeholder="e.g. PogChamp" required></input>
+								<span class="a-field__label-wrap">
+									<span class="a-field__label">Post a Message</span>
+								</span>
+							</label>
 						</div>
 					</div>
 				);
 			} else {
 				return (
 					<div className='container'>
-						<div className="action_button_dark" onClick={() => this.payForAction(100)}>
+						<div className="action_button_dark" onClick={() => this.payForAction("raveParty")}>
 							<h3>Flip Screen Orientation</h3>
 						</div>
-						<div className="action_button_dark" onClick={() => this.payForAction(200)}>
+						<div className="action_button_dark" onClick={() => this.payForAction("invertColors")}>
 							<h3>Invert Colors</h3>
 						</div>
-						<div className="action_button_dark" onClick={() => this.payForAction(300)}>
-							<h3>Shuffle Keyboard</h3>
+						<div class="page">
+							<label class="field a-field a-field_a1">
+								<input class="field__input a-field__input" placeholder="e.g. PogChamp" required></input>
+								<span class="a-field__label-wrap">
+									<span class="a-field__label">Post a Message</span>
+								</span>
+							</label>
 						</div>
 					</div>
 				);
