@@ -27,7 +27,7 @@ app.get('/hindrance/:broadcaster_id/:hindrance_id', (req, res) => {
 	data = JSON.parse(rawData); 
 
 	if(!data.hasOwnProperty(broadcaster_id) || data[broadcaster_id] == false) {
-		return res.send(message: "extension is currently not active on server")
+		return res.send({message: "extension is currently not active on server"})
 	} else {
 		io.to(broadcaster_id).emit('event', {id: hindrance_id})
 		return res.send({message: `successfully queue ${hindrance_id} for ${broadcaster_id}`})
@@ -41,7 +41,7 @@ app.post('/hindrance/:broadcaster_id/:hindrance_id', (req, res) => {
 	data = JSON.parse(rawData); 
 
 	if(!data.hasOwnProperty(broadcaster_id) || data[broadcaster_id] == false) {
-		return res.send(message: "extension is currently not active on server")
+		return res.send({message: "extension is currently not active on server"})
 	} else {
 		io.to(broadcaster_id).emit('event', {id: hindrance_id, text:req.body.text})
 		return res.send({message: `successfully queue ${hindrance_id} for ${broadcaster_id} with text ${req.body.text}`})
