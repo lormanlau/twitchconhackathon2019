@@ -1,7 +1,9 @@
 .action_button {
-	display: inline-block;
-	height: 90px;
-	width: 90px;
 	background-color: blue;
-	border: solid 1px black;
+}
+.container {
+	display: grid;
+	grid-template-columns: auto auto auto;
+	grid-template-rows: 25%;
+	grid-column-gap: 10px;
 }

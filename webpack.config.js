@@ -15,29 +15,9 @@ module.exports = (_env,argv)=> {
       outputHtml:"video_component.html",
       build:true
     },
-    VideoOverlay:{
-      path:"./src/VideoOverlay.js",
-      outputHtml:"video_overlay.html",
-      build:true
-    },
     Panel:{
       path:"./src/Panel.js",
       outputHtml:"panel.html",
-      build:true
-    },
-    Config:{
-      path:"./src/Config.js",
-      outputHtml:"config.html",
-      build:true
-    },
-    LiveConfig:{
-      path:"./src/LiveConfig.js",
-      outputHtml:"live_config.html",
-      build:true
-    },
-    Mobile:{
-      path:"./src/Mobile.js",
-      outputHtml:"mobile.html",
       build:true
     }
   }
@@ -107,7 +87,7 @@ module.exports = (_env,argv)=> {
       },
       port: 8080
     }
-    config.devServer.https = false
+    config.devServer.https = true
   }
   if(argv.mode==='production'){
     config.optimization.splitChunks={

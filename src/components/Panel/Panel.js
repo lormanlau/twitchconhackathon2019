@@ -1,10 +1,8 @@
 import React from 'react'
 import Authentication from '../../util/Authentication/Authentication'
+import { requestHindrance } from '../../util/requests'
 
 import './Panel.css'
-
-import { getRequest } from '../../util/requests'
-
 
 export default class PanelComponent extends React.Component {
 	constructor(props) {
@@ -21,16 +19,20 @@ export default class PanelComponent extends React.Component {
 
 	}
 
-	payForAction(bitsValue) {
-		getRequest()
-		.then(data => {
-			this.twitch.rig.log(data)
+	payForAction(hindrance_id) {
+		this.twitch.rig.log(bitsValue)
+		this.setState({isLoading: true})
+		requestHindrance(hindrance_id)
+		.then(() => {
+			this.setState({isLoading: false})
+			this.twitch.rig.log('success')
 		})
 	}
 
 	render() {
+		let {isLoading} = this.state
 		return (
-			<div>
+			<div className='container'>
 				<div className="action_button" onClick={() => this.payForAction(100)}>
 					Flip Screen Orientation
 				</div>
