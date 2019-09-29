@@ -122,10 +122,10 @@
               this.rainText = data.text;
               break;
             case 'raveParty':
-              this.addChallenge('raveParty', 'showCircles', 'Rave Party', 30);
+              this.addChallenge('raveParty', 'showCircles', 'Color Explosion', 30);
               break;
             case 'colorShift':
-              this.addChallenge('colorShift', 'showColorShift', 'Color Shift', 30);
+              this.addChallenge('colorShift', 'showColorShift', 'The Worst Rave', 30);
               break;
             default:
               break;
