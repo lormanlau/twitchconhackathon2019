@@ -70,6 +70,7 @@ export default class PanelComponent extends React.Component {
 				<div className="action_button" onClick={() => this.payForAction(300)}>
 					Shuffle Keyboard
 				</div>
+				
 			</div>
 			)
 	}
