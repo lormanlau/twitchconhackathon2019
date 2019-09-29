@@ -69,6 +69,12 @@ const server = new Hapi.Server(serverOptions);
     handler: colorCycleHandler
   });
 
+  server.route({
+    method: 'GET',
+    path: '/ping',
+    handler: ping
+  });
+
   // Handle a new viewer requesting the color.
   server.route({
     method: 'GET',
@@ -118,6 +124,13 @@ function verifyAndDecode (header) {
     }
   }
   throw Boom.unauthorized(STRINGS.invalidAuthHeader);
+}
+
+function ping(req) {
+  const payload = verifyAndDecode(req.headers.authorization);
+  const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
+  verboseLog('pong')
+  return 'pong'
 }
 
 function colorCycleHandler (req) {

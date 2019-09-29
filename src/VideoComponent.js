@@ -1,8 +1,8 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import App from "./components/App/App"
+import VideoComponent from "./components/VideoComponent/VideoComponent"
 
 ReactDOM.render(
-  <App />,
+  <VideoComponent />,
   document.getElementById("root")
 )
