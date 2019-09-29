@@ -14,12 +14,12 @@
         type: String,
         default: 'Kappa',
       },
-	    intensity: {
-		    default: 10,
-	    },
-	    greyscale: {
-		    default: false,
-	    },
+      intensity: {
+        default: 10,
+      },
+      greyscale: {
+        default: false,
+      },
     },
     mounted() {
       this.svg = d3.select(document.getElementById('svg'));

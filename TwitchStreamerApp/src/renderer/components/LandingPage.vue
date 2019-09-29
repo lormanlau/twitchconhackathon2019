@@ -57,11 +57,13 @@
     <button
         class="mx-auto"
         style="display:block"
-        @click="username && $emit('finish', { greyscale, intensity, username })">Finish Configuration</button>
+        @click="finish">Finish Configuration</button>
   </div>
 </template>
 
 <script>
+  /* eslint-disable no-console */
+
   export default {
     name: 'landing-page',
     data() {
@@ -70,6 +72,18 @@
         intensity: 10,
         username: '',
       };
+    },
+    methods: {
+      finish() {
+        console.log('clicked');
+        if (this.username.length > 0) {
+          this.$emit('finish', {
+            greyscale: this.greyscale,
+            intensity: this.intensity,
+            username: this.username,
+          });
+        }
+      },
     },
   };
 </script>

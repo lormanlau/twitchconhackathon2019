@@ -99,7 +99,8 @@
       showColorShift() {
         if (this.showColorShift) {
           this.colorShift();
-          this.colorShiftLoopID = setInterval(this.colorShift, Math.round(1000 / (this.intensity / 20)));
+          const interval = Math.round(1000 / (this.intensity / 20));
+          this.colorShiftLoopID = setInterval(this.colorShift, interval);
         } else {
           clearInterval(this.colorShiftLoopID);
           this.$emit('bg', 'rgba(0, 0, 0, 0)');

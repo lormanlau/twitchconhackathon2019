@@ -8,12 +8,12 @@
   export default {
     name: 'Circles',
     props: {
-    	intensity: {
-    		default: 10,
+      intensity: {
+        default: 10,
       },
-	    greyscale: {
+      greyscale: {
         default: false,
-	    },
+      },
     },
     created() {
     },

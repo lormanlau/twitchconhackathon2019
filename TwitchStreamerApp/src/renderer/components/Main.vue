@@ -15,6 +15,8 @@
 </template>
 
 <script>
+  /* eslint-disable no-console */
+
   import { remote } from 'electron';
   import LandingPage from './LandingPage';
   import Challenges from './Challenges';
@@ -39,9 +41,10 @@
     },
     methods: {
       transitionToWindowless({ greyscale, intensity, username }) {
-      	this.greyChallenges = greyscale;
-      	this.challengeRatePerTen = intensity;
-      	this.username = username;
+        console.log(greyscale, intensity, username);
+        this.greyChallenges = greyscale;
+        this.challengeRatePerTen = intensity;
+        this.username = username;
         const mainWindow = remote.getCurrentWindow();
         mainWindow.setVisibleOnAllWorkspaces(true);
         mainWindow.setAlwaysOnTop(true, 'floating', 1);
