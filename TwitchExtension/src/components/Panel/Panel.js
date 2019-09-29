@@ -27,12 +27,7 @@ export default class PanelComponent extends React.Component {
   }
 
 	componentWillMount() {
-		if (this.twitch) {
-			this.twitch.rig.log("panel mounted")
-			this.twitch.onContext((context,delta)=>{
-				this.contextUpdate(context,delta)
-			})
-		}
+		this.twitch.rig.log("panel mounted")
 	}
 
 	componentDidMount() {
@@ -52,14 +47,6 @@ export default class PanelComponent extends React.Component {
 
 	componentWillUnmount(){
 
-	}
-
-	contextUpdate(context, delta) {
-		if(delta.includes('theme')){
-            this.setState(()=>{
-                return {theme:context.theme}
-            })
-        }
 	}
 
 	payForAction(hindrance_id) {
