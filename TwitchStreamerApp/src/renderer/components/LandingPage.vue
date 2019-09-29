@@ -44,14 +44,14 @@
     <div
         class="mx-auto"
         style="display:inline-block">
-      <label
-          for="exampleCheck1"
-          style="display:inline-block">Greyscale the colors</label>
       <input
           v-model="greyscale"
           type="checkbox"
           id="exampleCheck1"
           style="display:inline-block">
+      <label
+          for="exampleCheck1"
+          style="display:inline-block">Greyscale the colors</label>
     </div>
     <br>
     <button

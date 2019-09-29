@@ -153,7 +153,7 @@
         const b = Math.round(Math.random() * 256);
         const a = (Math.random() / 3) + 0.2;
         if (this.greyscale) this.$emit('bg', `rgba(${g}, ${g}, ${g}, ${a})`);
-        this.$emit('bg', `rgba(${r}, ${g}, ${b}, ${a})`);
+        else this.$emit('bg', `rgba(${r}, ${g}, ${b}, ${a})`);
       },
 
       convertTime(duration) {
