@@ -3,7 +3,7 @@ import Authentication from '../../util/Authentication/Authentication'
 
 import './Panel.css'
 
-import requests from '../../util/requests'
+import { getRequest } from '../../util/requests'
 
 
 export default class PanelComponent extends React.Component {
@@ -22,12 +22,9 @@ export default class PanelComponent extends React.Component {
 	}
 
 	payForAction(bitsValue) {
-		fetch('http://localhost:8081/')
+		getRequest()
 		.then(data => {
-			return data.json()
-		})
-		.then(json => {
-			this.twitch.rig.log(json)
+			this.twitch.rig.log(data)
 		})
 	}
 

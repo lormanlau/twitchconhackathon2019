@@ -1,9 +1,6 @@
-let requests = {
-	get: getRequest()
-}
+const serverPath = 'http://localhost:8081'
 
-function getRequest() {
-	return fetch("http://localhost:8081/ping")
+export function getRequest() {
+	return fetch(serverPath + '/ping')
+	.then(data => data.json())
 }
-
-export default requests
