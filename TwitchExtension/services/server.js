@@ -18,8 +18,17 @@ app.get('/ping', (req, res) => {
 	res.send({message: 'pong'})
 })
 
+// tell the user if they can use it or not
 app.get('/hindrance/:broadcaster_id/:hindrance_id', (req, res) => {
 	let {hindrance_id, broadcaster_id} = req.params
+
+	rawData = fs.readFileSync( "broadcasters.json" );
+	data = JSON.parse(rawData); 
+
+	if(!data.hasOwnProperty(broadcaster_id) || data[broadcaster_id] == false) {
+		res.send(message: "extension is currently not active on server")
+		return; 
+	}
 
 	res.send({message: `successfully queue ${hindrance_id} for ${broadcaster_id}`})
 })
@@ -47,7 +56,6 @@ io.on('connection', socket => {
 
 	// deactivate them so buttons wont render
 	socket.on('disconnected', msg => {
-		socket.join(msg.id)
 
 		// time to read in from a json file in the local directory
 		rawData = fs.readFileSync( "broadcasters.json" );
