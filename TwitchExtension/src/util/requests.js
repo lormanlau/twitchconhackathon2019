@@ -5,4 +5,7 @@ export function getRequest() {
 	.then(data => data.json())
 }
 
-export function requestHindrance
+export function requestHindrance(hindrance_id) {
+	return fetch(`${serverPath}/${hindrance_id}`)
+	.then(data => data.json())
+}
