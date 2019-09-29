@@ -1,7 +1,6 @@
 import React from 'react'
 import Authentication from '../../util/Authentication/Authentication'
-import { requestHindrance } from '../../util/requests'
-import { postHindranceMessage } from '../../util/requests'
+import { requestHindrance, postHindranceMessage } from '../../util/requests'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 
@@ -16,7 +15,11 @@ export default class PanelComponent extends React.Component {
 		this.state = {
 			isLoading: true,
 			theme: 'light',
+			text: '',
 		}
+
+		this.handleTextChange = this.handleTextChange.bind(this);
+		this.handleKeyPress = this.handleKeyPress.bind(this);
 	}
 
 	contextUpdate(context, delta) {
@@ -54,10 +57,7 @@ export default class PanelComponent extends React.Component {
 	payForAction(hindrance_id) {
 		this.twitch.rig.log(hindrance_id, "requested")
 		this.setState({isLoading: true})
-		// setTimeout(() => {
-		// 	console.log('Hello, World!')
-		// 	this.setState({isLoading: false})
-		// }, 3000);
+
 		requestHindrance(this.state.broadcaster_id, hindrance_id)
 		.then(data => {
 			this.twitch.rig.log(data.message)
@@ -69,10 +69,7 @@ export default class PanelComponent extends React.Component {
 	payForActionWithMessage(hindrance_id, message) {
 		this.twitch.rig.log(hindrance_id, "requested: " + message)
 		this.setState({isLoading: true})
-		// setTimeout(() => {
-		// 	console.log('Hello, World!')
-		// 	this.setState({isLoading: false})
-		// }, 3000);
+
 		postHindranceMessage(this.state.broadcaster_id, hindrance_id, message)
 		.then(data => {
 			this.twitch.rig.log(data.message)
@@ -81,23 +78,32 @@ export default class PanelComponent extends React.Component {
 		.finally(() => this.setState({isLoading: false}))
 	}
 
+	handleTextChange(event) {
+		this.setState({text: event.target.value})
+	}
+
+	handleKeyPress(event) {
+		if (event.key === "Enter") {
+			this.payForActionWithMessage("rainingText", this.state.text)
+		}
+	}
+
 	render() {
-		let {isLoading} = this.state;
-		let {theme} = this.state;
-		console.log(theme);
+		let {isLoading, theme, text} = this.state;
+
 		if (isLoading) {
 			if (theme == "light") {
 				return (
 					<div className='container'>
 						<div className="action_button_loading_light" onClick={() => this.payForAction("raveParty")}>
-							<h3>Flip Screen Orientation</h3>
+							<h3>Rave Party</h3>
 						</div>
 						<div className="action_button_loading_light" onClick={() => this.payForAction("invertColors")}>
 							<h3>Invert Colors</h3>
 						</div>
 						<div class="page">
 							<label class="field a-field a-field_a1">
-						    <input class="field__input a-field__input" placeholder="e.g. PogChamp" required></input>
+						    <input value={text} onChange={this.handleTextChange} onKeyPress={this.handleKeyPress} class="field__input a-field__input" placeholder="e.g. PogChamp" required></input>
 						    <span class="a-field__label-wrap">
 						      <span class="a-field__label">Post a Message</span>
 						    </span>
@@ -112,14 +118,14 @@ export default class PanelComponent extends React.Component {
 				return (
 					<div className='container'>
 						<div className="action_button_loading_dark" onClick={() => this.payForAction("raveParty")}>
-							<h3>Flip Screen Orientation</h3>
+							<h3>Rave Party</h3>
 						</div>
 						<div className="action_button_loading_dark" onClick={() => this.payForAction("invertColors")}>
 							<h3>Invert Colors</h3>
 						</div>
 						<div class="page">
 							<label class="field a-field a-field_a1">
-						    <input class="field__input a-field__input" placeholder="e.g. PogChamp" required></input>
+						    <input value={text} onChange={this.handleTextChange} onKeyPress={this.handleKeyPress} class="field__input a-field__input" placeholder="e.g. PogChamp" required></input>
 						    <span class="a-field__label-wrap">
 						      <span class="a-field__label">Post a Message</span>
 						    </span>
@@ -136,18 +142,18 @@ export default class PanelComponent extends React.Component {
 				return (
 					<div className='container'>
 						<div className="action_button_light" onClick={() => this.payForAction("raveParty")}>
-							<h3>Flip Screen Orientation</h3>
+							<h3>Rave Party</h3>
 						</div>
 						<div className="action_button_light" onClick={() => this.payForAction("invertColors")}>
 							<h3>Invert Colors</h3>
 						</div>
 						<div class="page">
 							<label class="field a-field a-field_a1">
-								<input class="field__input a-field__input" placeholder="e.g. PogChamp" required></input>
-								<span class="a-field__label-wrap">
-									<span class="a-field__label">Post a Message</span>
-								</span>
-							</label>
+						    <input value={text} onChange={this.handleTextChange} onKeyPress={this.handleKeyPress} class="field__input a-field__input" placeholder="e.g. PogChamp" required></input>
+						    <span class="a-field__label-wrap">
+						      <span class="a-field__label">Post a Message</span>
+						    </span>
+						  </label>
 						</div>
 					</div>
 				);
@@ -155,18 +161,18 @@ export default class PanelComponent extends React.Component {
 				return (
 					<div className='container'>
 						<div className="action_button_dark" onClick={() => this.payForAction("raveParty")}>
-							<h3>Flip Screen Orientation</h3>
+							<h3>Rave Party</h3>
 						</div>
 						<div className="action_button_dark" onClick={() => this.payForAction("invertColors")}>
 							<h3>Invert Colors</h3>
 						</div>
 						<div class="page">
 							<label class="field a-field a-field_a1">
-								<input class="field__input a-field__input" placeholder="e.g. PogChamp" required></input>
-								<span class="a-field__label-wrap">
-									<span class="a-field__label">Post a Message</span>
-								</span>
-							</label>
+						    <input value={text} onChange={this.handleTextChange} onKeyPress={this.handleKeyPress} class="field__input a-field__input" placeholder="e.g. PogChamp" required></input>
+						    <span class="a-field__label-wrap">
+						      <span class="a-field__label">Post a Message</span>
+						    </span>
+						  </label>
 						</div>
 					</div>
 				);

@@ -1,4 +1,4 @@
-const serverPath = 'http://localhost:8081'
+const serverPath = 'https://7c03d8c0.ngrok.io'
 
 export function getRequest() {
 	return fetch(serverPath + '/ping')
@@ -11,10 +11,11 @@ export function requestHindrance(broadcaster_id, hindrance_id) {
 }
 
 export function postHindranceMessage(broadcaster_id, hindrance_id, message) {
+	console.log(message)
 	return fetch(`${serverPath}/hindrance/${broadcaster_id}/${hindrance_id}`,
 	{
 		method: 'post',
-		body: {text: message}
+		body: {message}
 	})
 	.then(data => data.json())
 }
