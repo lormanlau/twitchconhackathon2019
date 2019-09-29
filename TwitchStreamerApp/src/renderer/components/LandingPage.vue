@@ -20,8 +20,8 @@
           class="m-auto"
           style="float: left; width: 50%">
         <div>
-          <label for="username">Username</label>
-          <input :model="username" id="username" placeholder="Enter your Twitch display name">
+          <label for="user">Username</label>
+          <input v-model="username" id="user" placeholder="Enter your Twitch display name">
         </div>
       </div>
 
@@ -31,7 +31,7 @@
         <div style="float: left">
           <label for="intensity">Effect intensity (from 1 to 20)</label>
           <input
-              :model="intensity"
+              v-model="intensity"
               type="number"
               id="intensity"
               min="1"
@@ -48,7 +48,7 @@
           for="exampleCheck1"
           style="display:inline-block">Greyscale the colors</label>
       <input
-          :model="greyscale"
+          v-model="greyscale"
           type="checkbox"
           id="exampleCheck1"
           style="display:inline-block">
@@ -76,6 +76,11 @@
     methods: {
       finish() {
         console.log('clicked');
+        console.log({
+          greyscale: this.greyscale,
+          intensity: this.intensity,
+          username: this.username,
+        });
         if (this.username.length > 0) {
           this.$emit('finish', {
             greyscale: this.greyscale,

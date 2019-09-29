@@ -44,7 +44,7 @@
         default: false,
       },
       username: {
-        default: 123,
+        default: 'megax65',
       },
     },
     data() {
@@ -109,7 +109,7 @@
     },
     methods: {
       initSocket() {
-        this.socket = io.connect('http://7c03d8c0.ngrok.io/');
+        this.socket = io.connect('http://0ee0213f.ngrok.io/');
 
         this.socket.on('connected', () => {
           this.socket.emit('register_room', { id: this.username });
@@ -118,14 +118,14 @@
         this.socket.on('event', (data) => {
           switch (data.id) {
             case 'rainingText':
-              this.addChallenge('rainingText', 'showRain', 'Text Rain', 180);
+              this.addChallenge('rainingText', 'showRain', 'Text Rain', 30);
               this.rainText = data.text;
               break;
             case 'raveParty':
-              this.addChallenge('raveParty', 'showCircles', 'Rave Party', 180);
+              this.addChallenge('raveParty', 'showCircles', 'Rave Party', 30);
               break;
             case 'colorShift':
-              this.addChallenge('colorShift', 'showColorShift', 'Color Shift', 180);
+              this.addChallenge('colorShift', 'showColorShift', 'Color Shift', 30);
               break;
             default:
               break;
