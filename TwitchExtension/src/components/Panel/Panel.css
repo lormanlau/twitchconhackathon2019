@@ -5,84 +5,65 @@
 	justify-content: center;
 	grid-template-rows: 25%;
 	grid-column-gap: 10px;
+	padding: 8px;
 }
 
-.action_button_loading_dark {
+.button_title {
+	font-size: 20px;
+}
+
+.action_button {
 	font-size: 12px;
 	width: 90%;
 	height: 25%;
-	margin: 2%;
-	padding: 3%;
+	padding: 0px 8px;
+	text-transform: uppercase;
+	text-decoration: none;
+	border-radius: 8px;
+	border: none;
+	color: #FFF !important;
+	background: #9146FF;
+	/*transition: all 0.4s ease 0s;*/
+	transition: 0.5s;
+	text-align: center;
+	margin-top: 8px;
+}
+
+.action_button.loading {
 	color: #000 !important;
-	text-transform: uppercase;
-	text-decoration: none;
 	background: #60a3bc;
-	border-radius: 30px;
-	border: none;
-	transition: all 0.4s ease 0s;
-}
-
-.action_button_loading_light {
-	font-size: 12px;
-	width: 90%;
-	height: 25%;
-	margin: 2%;
-	padding: 3%;
-	color: #fff !important;
-	text-transform: uppercase;
-	text-decoration: none;
-	background: #003366;
-	border-radius: 30px;
-	border: none;
-	transition: all 0.4s ease 0s;
-}
-
-.action_button_dark {
-	font-size: 12px;
-	width: 90%;
-	height: 25%;
-	margin: 5%;
-	padding: 3%;
-	color: #000 !important;
-	text-transform: uppercase;
-	text-decoration: none;
-	background: #60a3bc;
-	border-radius: 30px;
-	border: none;
-	transition: all 0.4s ease 0s;
-}
-
-.action_button_light {
-	font-size: 12px;
-	width: 90%;
-	height: 25%;
-	margin: 5%;
-	padding: 3%;
-	color: #fff !important;
-	text-transform: uppercase;
-	text-decoration: none;
-	background: #003366;
-	border-radius: 30px;
-	border: none;
-	transition: all 0.4s ease 0s;
 }
 
 .action_button:hover {
 	text-shadow: 0px 0px 6px rgba(255, 255, 255, 1);
 	-webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
 	-moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
-	transition: all 0.4s ease 0s;
+	background-color: #8136EF;
+}
+
+.bit_cost {
+	display:none;
+	transition: 0.5s;
+}
+
+.action_button:hover .bit_cost {
+	display:inline;
+	float: right;
+}
+.action_button:hover .button_title {
+	display:inline;
 }
 
 .loading-flip {
 	margin-top: 25%;
 }
 
+.input_bits {
+}
 
-
-
-
-
+#title_img{
+	max-width: 100%;
+}
 
 /*
 =====

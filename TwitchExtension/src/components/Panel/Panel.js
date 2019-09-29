@@ -16,10 +16,14 @@ export default class PanelComponent extends React.Component {
 			isLoading: true,
 			theme: 'light',
 			text: '',
+			showBits: false
 		}
 
 		this.handleTextChange = this.handleTextChange.bind(this);
 		this.handleKeyPress = this.handleKeyPress.bind(this);
+		this.handleFocus = this.handleFocus.bind(this);
+		this.handleBlur = this.handleBlur.bind(this);
+		this.handleClick = this.handleClick.bind(this);
 	}
 
 	contextUpdate(context, delta) {
@@ -40,7 +44,8 @@ export default class PanelComponent extends React.Component {
 				this.Authentication.setToken(auth.token, auth.userId);
 				this.setState({
 					isLoading: false,
-					broadcaster_id: auth.channelId
+					// broadcaster_id: auth.channelId
+					broadcaster_id: 123
 				});
 			})
 
@@ -88,95 +93,51 @@ export default class PanelComponent extends React.Component {
 		}
 	}
 
-	render() {
-		let {isLoading, theme, text} = this.state;
+	handleClick(event) {
+		console.log(this.state.text)
+		this.payForActionWithMessage('rainingText', this.state.text)
+	}
 
-		if (isLoading) {
-			if (theme == "light") {
-				return (
-					<div className='container'>
-						<div className="action_button_loading_light" onClick={() => this.payForAction("raveParty")}>
-							<h3>Rave Party</h3>
-						</div>
-						<div className="action_button_loading_light" onClick={() => this.payForAction("invertColors")}>
-							<h3>Invert Colors</h3>
-						</div>
-						<div class="page">
-							<label class="field a-field a-field_a1">
-						    <input value={text} onChange={this.handleTextChange} onKeyPress={this.handleKeyPress} class="field__input a-field__input" placeholder="e.g. PogChamp" required></input>
-						    <span class="a-field__label-wrap">
-						      <span class="a-field__label">Post a Message</span>
-						    </span>
-						  </label>
-						</div>
-						<div className = "loading-icon">
-							<FontAwesomeIcon className="loading-flip" icon={faSpinner} size="2x" color="black" spin />
-						</div>
-					</div>
-				);
-			} else {
-				return (
-					<div className='container'>
-						<div className="action_button_loading_dark" onClick={() => this.payForAction("raveParty")}>
-							<h3>Rave Party</h3>
-						</div>
-						<div className="action_button_loading_dark" onClick={() => this.payForAction("invertColors")}>
-							<h3>Invert Colors</h3>
-						</div>
-						<div class="page">
-							<label class="field a-field a-field_a1">
-						    <input value={text} onChange={this.handleTextChange} onKeyPress={this.handleKeyPress} class="field__input a-field__input" placeholder="e.g. PogChamp" required></input>
-						    <span class="a-field__label-wrap">
-						      <span class="a-field__label">Post a Message</span>
-						    </span>
-						  </label>
-						</div>
-						<div className = "loading-icon">
-							<FontAwesomeIcon className="loading-flip" icon={faSpinner} size="2x" color="white" spin />
-						</div>
-					</div>
-				);
-			}
-		} else {
-			if (theme == "light") {
-				return (
-					<div className='container'>
-						<div className="action_button_light" onClick={() => this.payForAction("raveParty")}>
-							<h3>Rave Party</h3>
-						</div>
-						<div className="action_button_light" onClick={() => this.payForAction("invertColors")}>
-							<h3>Invert Colors</h3>
-						</div>
-						<div class="page">
-							<label class="field a-field a-field_a1">
-						    <input value={text} onChange={this.handleTextChange} onKeyPress={this.handleKeyPress} class="field__input a-field__input" placeholder="e.g. PogChamp" required></input>
-						    <span class="a-field__label-wrap">
-						      <span class="a-field__label">Post a Message</span>
-						    </span>
-						  </label>
-						</div>
-					</div>
-				);
-			} else {
-				return (
-					<div className='container'>
-						<div className="action_button_dark" onClick={() => this.payForAction("raveParty")}>
-							<h3>Rave Party</h3>
-						</div>
-						<div className="action_button_dark" onClick={() => this.payForAction("invertColors")}>
-							<h3>Invert Colors</h3>
-						</div>
-						<div class="page">
-							<label class="field a-field a-field_a1">
-						    <input value={text} onChange={this.handleTextChange} onKeyPress={this.handleKeyPress} class="field__input a-field__input" placeholder="e.g. PogChamp" required></input>
-						    <span class="a-field__label-wrap">
-						      <span class="a-field__label">Post a Message</span>
-						    </span>
-						  </label>
-						</div>
-					</div>
-				);
-			}
+	handleFocus(event) {
+		this.setState({showBits: true})
+	}
+
+	handleBlur(event) {
+		if (this.state.text.length === 0) {
+			this.setState({showBits: false})
 		}
+	}
+
+	render() {
+		let {isLoading, theme, text, showBits} = this.state;
+
+		return (
+			<div className='container'>		
+				<img id='title_img'src={require("../../assets/title.png")}/>	
+				<div
+					className={"action_button " + (isLoading ? "loading" : "")}
+					onClick={() => this.payForAction("raveParty")}>
+					<span className="button_title">Rave Party</span>
+					<span className="bit_cost">200 bits</span>
+				</div>
+				<div
+					className={"action_button " + (isLoading ? "loading" : "")}
+					onClick={() => this.payForAction("colorShift")}>
+					<span className="button_title">Color Shift</span>
+					<span className="bit_cost">200 bits</span>
+				</div>
+				<div className="page">
+					<label className="field a-field a-field_a1">
+					    <input value={text} onFocus={this.handleFocus} onBlur={this.handleBlur} onChange={this.handleTextChange} onKeyPress={this.handleKeyPress} className="field__input a-field__input" placeholder="e.g. PogChamp" required></input>
+					    <span className="a-field__label-wrap">
+					      <span class="a-field__label">Post a Message</span>
+					    </span>
+				  	</label>
+				  	<div>
+				  		{showBits && <span className="action_button input_bits" onClick={this.handleClick}>200 bits</span>}
+				  	</div>
+				</div>
+			</div>
+		);
 	}
 }
