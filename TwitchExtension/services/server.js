@@ -1,8 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const app = express();
-const http = require('http').createServer(app)
-const io = require('socket.io').listen(http)
+const server = require('http').createServer(app)
+const io = require('socket.io').listen(server)
 
 
 var broadcasters = {}
@@ -25,14 +25,14 @@ app.get('/hindrance/:broadcaster_id/:hindrance_id', (req, res) => {
 
 io.on('connection', socket => {
 	socket.emit('connected', {message: "connected"})
-	console.log('someone connected')
-	socket.on('register_room', (id, msg) => {
-		console.log(id)
+	socket.on('register_room', msg => {
+		socket.join(msg.id)
+		io.to(msg.id).emit('event', {message: "successfully registered"})
 	})
 })
 
 
 
-app.listen(8081, () => {
+server.listen(8081, () => {
 	console.log("Working on port 8081")
 })
