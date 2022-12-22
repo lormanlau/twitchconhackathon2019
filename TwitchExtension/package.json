@@ -48,7 +48,7 @@
     "fs": "^0.0.1-security",
     "hapi": "^18.1.0",
     "http": "^0.0.0",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "path": "^0.12.7",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
